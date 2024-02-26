@@ -23,7 +23,7 @@
 
       report("Before making all the calls"); //2
 
-      assert(useless(getText) === text, "The useless function works! " + text); //5
+      assert(useless(getText) === text, "The useless function works! " + text); //5 先執行 useless 在執行 ninjaCallback(也就是getText)
 
       report("After the calls have been made"); //6
     </script>

@@ -13,7 +13,8 @@
         cache: {},
         add: function (fn) {
           if (!fn.id) {
-            fn.id = this.nextId++; // this 代表store物件本身
+            // 如果函式有id屬性，代表處理過了，就跳過
+            fn.id = this.nextId++; // this 代表store物件本身，指派id屬性
             this.cache[fn.id] = fn;
             return true;
           }
@@ -22,8 +23,8 @@
 
       function ninja() {}
 
-      assert(store.add(ninja), "Function was safely added.");
-      assert(!store.add(ninja), "But it was only added once.");
+      assert(store.add(ninja), "Function was safely added."); // 第一次添加成功
+      assert(!store.add(ninja), "But it was only added once."); // 第二次添加失敗
     </script>
   </body>
 </html>
