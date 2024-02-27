@@ -1,24 +1,27 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Using arrow functions to work around callback function contexts</title>
-  <meta charset="utf-8">
-  <script src="../assert.js"></script>
-  <link rel="stylesheet" type="text/css" href="../assert.css">
-</head>
-<body>
-  <button id="test">Click Me!</button>
-  <script>
-    function Button() {
-      this.clicked = false;
-      this.click = () => {
-        this.clicked = true;
-        assert(button.clicked, "The button has been clicked");
+  <head>
+    <title>
+      Using arrow functions to work around callback function contexts
+    </title>
+    <meta charset="utf-8" />
+    <script src="../assert.js"></script>
+    <link rel="stylesheet" type="text/css" href="../assert.css" />
+  </head>
+  <body>
+    <button id="test">Click Me!</button>
+    <script>
+      function Button() {
+        this.clicked = false;
+        this.click = () => {
+          // 箭頭函示沒有自己的背景空間，所以是繼承而來，指向的就是 button 物件，而非 button 標籤
+          this.clicked = true;
+          assert(button.clicked, "The button has been clicked");
+        };
       }
-    }
-    var button = new Button();
-    var elem = document.getElementById("test");
-    elem.addEventListener("click", button.click);
-  </script>
-</body>
+      var button = new Button();
+      var elem = document.getElementById("test");
+      elem.addEventListener("click", button.click);
+    </script>
+  </body>
 </html>

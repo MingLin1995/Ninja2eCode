@@ -1,27 +1,30 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Binding a specific context to an event handler</title>
-  <meta charset="utf-8">
-  <script src="../assert.js"></script>
-  <link rel="stylesheet" type="text/css" href="../assert.css">
-</head>
-<body>
-  <button id="test">Click Me!</button>
-  <script type="text/javascript">
-    var button = {
-      clicked: false,
-      click: function(){
-        this.clicked = true;
-        assert(button.clicked,"The button has been clicked");
-      }
-    };
-    var elem = document.getElementById("test");
-    elem.addEventListener("click", button.click.bind(button));
+  <head>
+    <title>Binding a specific context to an event handler</title>
+    <meta charset="utf-8" />
+    <script src="../assert.js"></script>
+    <link rel="stylesheet" type="text/css" href="../assert.css" />
+  </head>
+  <body>
+    <button id="test">Click Me!</button>
+    <script type="text/javascript">
+      var button = {
+        clicked: false,
+        click: function () {
+          this.clicked = true;
+          assert(button.clicked, "The button has been clicked");
+        },
+        ㄑ,
+      };
+      var elem = document.getElementById("test");
+      elem.addEventListener("click", button.click.bind(button)); // 使用 bind 函式，建立一個綁定到 button 物件上的新函式
 
-    var boundFunction = button.click.bind(button);
-    assert(boundFunction !== button.click,
-           "Calling bind creates a completyl new function");
-  </script>
-</body>
+      var boundFunction = button.click.bind(button);
+      assert(
+        boundFunction !== button.click, // 不會修改原始函式，而是建立一個新的函式
+        "Calling bind creates a completyl new function"
+      );
+    </script>
+  </body>
 </html>

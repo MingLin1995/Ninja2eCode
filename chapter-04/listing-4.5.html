@@ -1,29 +1,32 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Invocation as a function</title>
-  <meta charset="utf-8">
-  <script src="../assert.js"></script>
-  <link rel="stylesheet" type="text/css" href="../assert.css">
-</head>
-<body>
-	  <script>
-  		function ninja() {
-        return this;
+  <head>
+    <title>Invocation as a function</title>
+    <meta charset="utf-8" />
+    <script src="../assert.js"></script>
+    <link rel="stylesheet" type="text/css" href="../assert.css" />
+  </head>
+  <body>
+    <script>
+      function ninja() {
+        return this; // 普通模式，指的是 window
       }
 
       function samurai() {
-        "use strict";
+        "use strict"; // 嚴格模式，則是 undefined
         return this;
       }
 
-      assert(ninja() === window,
+      assert(
+        ninja() === window,
         "In a 'non-strict' ninja function, " +
-        "the context is the global window object");
+          "the context is the global window object"
+      );
 
-      assert(samurai() === undefined,
-        "In a 'strict' samurai function, " +
-        "the context is undefined");
-  	</script>
-</body>
+      assert(
+        samurai() === undefined,
+        "In a 'strict' samurai function, " + "the context is undefined"
+      );
+    </script>
+  </body>
 </html>

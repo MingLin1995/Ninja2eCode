@@ -1,38 +1,48 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Illustrating the difference between function and method invocations</title>
-  <meta charset="utf-8">
-  <script src="../assert.js"></script>
-  <link rel="stylesheet" type="text/css" href="../assert.css">
-</head>
-<body>
- <script>
-		function whatsMyContext() {
-      return this;
-    }
+  <head>
+    <title>
+      Illustrating the difference between function and method invocations
+    </title>
+    <meta charset="utf-8" />
+    <script src="../assert.js"></script>
+    <link rel="stylesheet" type="text/css" href="../assert.css" />
+  </head>
+  <body>
+    <script>
+      function whatsMyContext() {
+        return this; // 返回函式背景空間
+      }
 
-    assert(whatsMyContext() === window,
-      "Function call on window");
+      assert(
+        whatsMyContext() === window, // 一般的函式呼叫
+        "Function call on window"
+      );
 
-    var getMyThis = whatsMyContext;
+      var getMyThis = whatsMyContext;
 
-    assert(getMyThis() === window,
-      "Another function call in window");
+      assert(
+        getMyThis() === window, // 透過變數的一般函式呼叫
+        "Another function call in window"
+      );
 
-    var ninja1 = {
-      getMyThis: whatsMyContext
-    };
+      var ninja1 = {
+        // 建立物件 getMyThis 屬性，參照到 whatsMyContext 函式
+        getMyThis: whatsMyContext,
+      };
 
-    assert(ninja1.getMyThis() === ninja1,
-      "Working with 1st ninja");
+      assert(
+        ninja1.getMyThis() === ninja1, // 透過 ninja1 物件上的 getMyThis 方法呼叫，所以背景空間為 ninja （物件導向基本概念）
+        "Working with 1st ninja"
+      );
 
-    var ninja2 = {
-      getMyThis: whatsMyContext
-    };
+      var ninja2 = {
+        getMyThis: whatsMyContext,
+      };
 
-    assert(ninja2.getMyThis() === ninja2,
-      "Working with 2nd ninja");
-	</script>
-</body>
+      assert(ninja2.getMyThis() === ninja2, "Working with 2nd ninja");
+
+      // ninja1 和 ninja2 物件，可以使用“同一個”函式，而函式可以依據不同的物件進行操作，就是基本的物件導向設計
+    </script>
+  </body>
 </html>
