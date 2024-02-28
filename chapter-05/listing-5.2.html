@@ -1,31 +1,31 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>A not so simple closure</title>
+    <meta charset="utf-8" />
+    <script src="../assert.js"></script>
+    <link rel="stylesheet" type="text/css" href="../assert.css" />
+  </head>
 
-<head>
-  <title>A not so simple closure</title>
-  <meta charset="utf-8">
-  <script src="../assert.js"></script>
-  <link rel="stylesheet" type="text/css" href="../assert.css">
-</head>
+  <body>
+    <script>
+      var outerValue = "samurai";
+      var later;
 
-<body>
-	<script>
-	  var outerValue = "samurai";
-    var later;
+      function outerFunction() {
+        // 會建立閉包，包含定義函式以及作用範圍內的所有參數，保存到記憶體
+        var innerValue = "ninja";
 
-    function outerFunction() {
-      var innerValue = "ninja";
+        function innerFunction() {
+          assert(outerValue === "samurai", "I can see the samurai.");
+          assert(innerValue === "ninja", "I can see the ninja.");
+        }
 
-      function innerFunction() {
-        assert(outerValue === "samurai", "I can see the samurai.");
-        assert(innerValue === "ninja", "I can see the ninja.");
+        later = innerFunction;
       }
 
-      later = innerFunction;
-    }
-
-    outerFunction();
-    later();
-	</script>
-</body>
+      outerFunction();
+      later(); // 藉由 later 變數來呼叫 innerFunction （無法直接使用 innerValue 以及 innerFunction），但因為有閉包，所以可以正常執行
+    </script>
+  </body>
 </html>

@@ -1,38 +1,37 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>The behavior of constant variable</title>
+    <meta charset="utf-8" />
+    <script src="../assert.js"></script>
+    <link rel="stylesheet" type="text/css" href="../assert.css" />
+  </head>
+  <body>
+    <script>
+      "use strict";
 
-<head>
-  <title>The behavior of constant variable</title>
-  <meta charset="utf-8">
-  <script src="../assert.js"></script>
-  <link rel="stylesheet" type="text/css" href="../assert.css">
-</head>
-<body>
-	<script>
-    "use strict"
+      const firstConst = "samurai";
+      assert(firstConst === "samurai", "firstConst is a samurai");
 
-	  const firstConst = "samurai";
-    assert(firstConst === "samurai", "firstConst is a samurai");
+      try {
+        firstConst = "ninja"; // 修改初始值，會發生錯誤
+        fail("Shouldn't be here");
+      } catch (e) {
+        pass("An exception has occured");
+      }
 
-    try{
-      firstConst = "ninja";
-      fail("Shouldn't be here");
-    } catch(e){
-      pass("An exception has occured");
-    }
-    
-    assert(firstConst === "samurai", "firstConst is still a samurai!");
+      assert(firstConst === "samurai", "firstConst is still a samurai!");
 
-    const secondConst = {};
-    secondConst.weapon = "wakizashi";
-    assert(secondConst.weapon === "wakizashi", "We can add new properties");
+      const secondConst = {};
+      secondConst.weapon = "wakizashi"; // 不能修改初始值，但是可以新增屬性，新增值
+      assert(secondConst.weapon === "wakizashi", "We can add new properties");
 
-    const thirdConst = [];
-    assert(thirdConst.length === 0, "No items in our array");  
-    
-    thirdConst.push("Yoshi");
+      const thirdConst = [];
+      assert(thirdConst.length === 0, "No items in our array");
 
-    assert(thirdConst.length === 1, "The array has changed");
-	</script>
-</body>
+      thirdConst.push("Yoshi");
+
+      assert(thirdConst.length === 1, "The array has changed");
+    </script>
+  </body>
 </html>

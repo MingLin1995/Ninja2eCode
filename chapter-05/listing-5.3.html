@@ -1,37 +1,41 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>Using closures to approximate private variable</title>
+    <meta charset="utf-8" />
+    <script src="../assert.js"></script>
+    <link rel="stylesheet" type="text/css" href="../assert.css" />
+  </head>
 
-<head>
-  <title>Using closures to approximate private variable</title>
-  <meta charset="utf-8">
-  <script src="../assert.js"></script>
-  <link rel="stylesheet" type="text/css" href="../assert.css">
-</head>
+  <body>
+    <script>
+      function Ninja() {
+        var feints = 0; // 初始化次數
+        this.getFeints = function () {
+          return feints;
+        };
+        this.feint = function () {
+          feints++;
+        };
+      }
 
-<body>
-	<script>
-    function Ninja() {
-      var feints = 0;
-      this.getFeints = function(){
-        return feints;
-      };
-      this.feint = function(){
-        feints++;
-      };
-     }
+      var ninja1 = new Ninja();
+      ninja1.feint(); // 會增加次數
 
-     var ninja1 = new Ninja();
-     ninja1.feint();
+      assert(
+        ninja1.feints === undefined, // 無法直接存取函式內的變數
+        "And the private data is inaccessible to us."
+      );
+      assert(
+        ninja1.getFeints() === 1,
+        "We're able to access the internal feint count."
+      );
 
-     assert(ninja1.feints === undefined,
-            "And the private data is inaccessible to us.");
-     assert(ninja1.getFeints() === 1,
-           "We're able to access the internal feint count.");
-
-
-     var ninja2 = new Ninja();
-     assert(ninja2.getFeints() === 0,
-            "The second ninja object gets it’s own feints variable.");
-	</script>
-</body>
+      var ninja2 = new Ninja(); // 建立另一個新的物件實例
+      assert(
+        ninja2.getFeints() === 0,
+        "The second ninja object gets it’s own feints variable."
+      );
+    </script>
+  </body>
 </html>
