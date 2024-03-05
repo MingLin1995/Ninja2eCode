@@ -1,23 +1,24 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>Using a generator to generate a sequence of values</title>
-		<link rel="stylesheet" href="../assert.css">
-		<script src="../assert.js"></script>
-	</head>
-	<body>
-		<script>
-			"use strict"
-			function* WeaponGenerator(){
-				yield "Katana";
-				yield "Wakizashi";
-		  		yield "Kusarigama";
-			}
+  <head>
+    <meta charset="utf-8" />
+    <title>Using a generator to generate a sequence of values</title>
+    <link rel="stylesheet" href="../assert.css" />
+    <script src="../assert.js"></script>
+  </head>
+  <body>
+    <script>
+      "use strict";
+      function* WeaponGenerator() {
+        // 用 * 定義生成器函式
+        yield "Katana"; // yield 產生個別的值
+        yield "Wakizashi";
+        yield "Kusarigama";
+      }
 
-			for(let weapon of WeaponGenerator()) {
-			  assert(weapon !== undefined, weapon);
-			}																				
-		</script>
-	</body>
+      for (let weapon of WeaponGenerator()) {
+        assert(weapon !== undefined, weapon); // 用迴圈產生新的值
+      }
+    </script>
+  </body>
 </html>
