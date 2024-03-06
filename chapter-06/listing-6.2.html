@@ -1,37 +1,44 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>Controlling a generator through an iterator object</title>
-		<link rel="stylesheet" href="../assert.css">
-		<script src="../assert.js"></script>
-	</head>
-	<body>
-		<script>
-			function* WeaponGenerator(){
-			  yield "Katana";
-			  yield "Wakizashi";
-			}
+  <head>
+    <meta charset="utf-8" />
+    <title>Controlling a generator through an iterator object</title>
+    <link rel="stylesheet" href="../assert.css" />
+    <script src="../assert.js"></script>
+  </head>
+  <body>
+    <script>
+      function* WeaponGenerator() {
+        // 定義生產兩件武器
+        yield "Katana";
+        yield "Wakizashi";
+      }
 
-			const weaponsIterator = WeaponGenerator();
+      const weaponsIterator = WeaponGenerator();
 
-			const result1 = weaponsIterator.next();
-			assert(typeof result1 === "object"
-			    && result1.value === "Katana"
-			    && !result1.done,
-			    "Katana received!");
+      const result1 = weaponsIterator.next(); // 呼叫 next 方法，產生新的值（物件）
+      assert(
+        typeof result1 === "object" &&
+          result1.value === "Katana" &&
+          !result1.done, // 代表是否還有下一個值的指示器
+        "Katana received!"
+      );
 
-			const result2 = weaponsIterator.next();
-			assert(typeof result2 === "object"
-			    && result2.value === "Wakizashi"
-			    && !result2.done,
-			    "Wakizashi received!");
+      const result2 = weaponsIterator.next();
+      assert(
+        typeof result2 === "object" &&
+          result2.value === "Wakizashi" &&
+          !result2.done,
+        "Wakizashi received!"
+      );
 
-			const result3 = weaponsIterator.next();
-			assert(typeof result3 === "object"
-			    && result3.value === undefined
-			    && result3.done,
-			    "There are no more results!");
-		</script>
-	</body>
+      const result3 = weaponsIterator.next();
+      assert(
+        typeof result3 === "object" &&
+          result3.value === undefined && // 沒有程式可以執行了
+          result3.done, // done 為 T 表示已經生成器完成工作了
+        "There are no more results!"
+      );
+    </script>
+  </body>
 </html>
