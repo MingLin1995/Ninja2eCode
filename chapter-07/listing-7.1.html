@@ -1,30 +1,32 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>With prototypes objects can access properties of other objects</title>
-		<link rel="stylesheet" href="../assert.css">
-		<script src="../assert.js"></script>
-	</head>
-	<body>
-		<script>
-			const yoshi = { skulk: true };
-			const hatori = { sneak: true };
-			const kuma = { creep: true };
+  <head>
+    <meta charset="utf-8" />
+    <title>
+      With prototypes objects can access properties of other objects
+    </title>
+    <link rel="stylesheet" href="../assert.css" />
+    <script src="../assert.js"></script>
+  </head>
+  <body>
+    <script>
+      const yoshi = { skulk: true };
+      const hatori = { sneak: true };
+      const kuma = { creep: true };
 
-			assert("skulk" in yoshi, "Yoshi can skulk");
-			assert(!("sneak" in yoshi), "Yoshi cannot sneak");
-			assert(!("creep" in yoshi), "Yoshi cannot creep");
+      assert("skulk" in yoshi, "Yoshi can skulk");
+      assert(!("sneak" in yoshi), "Yoshi cannot sneak");
+      assert(!("creep" in yoshi), "Yoshi cannot creep");
 
-			Object.setPrototypeOf(yoshi, hatori);
+      Object.setPrototypeOf(yoshi, hatori); // 透過 Object.setPrototypeOf 方法，將 hatori 設定為 yoshi 的原型 (第二個引數設定為第一個引數的原型)
 
-			assert("sneak" in yoshi, "Yoshi can now sneak");
+      assert("sneak" in yoshi, "Yoshi can now sneak"); // 所以 yoshi 可以存取 hatori 的屬性
 
-			assert(!("creep" in hatori), "Hatori cannot creep");
+      assert(!("creep" in hatori), "Hatori cannot creep");
 
-			Object.setPrototypeOf(hatori, kuma);
-			assert("creep" in hatori, "Hatori can now creep");
-			assert("creep" in yoshi, "Yoshi can also creep");
-		</script>
-	</body>
+      Object.setPrototypeOf(hatori, kuma);
+      assert("creep" in hatori, "Hatori can now creep");
+      assert("creep" in yoshi, "Yoshi can also creep"); // yoshi 找不到 creep ，所以往原型 hatori 找，然後也找不到，再往原型 kuma 找，就能找到了
+    </script>
+  </body>
 </html>
