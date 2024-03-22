@@ -9,13 +9,14 @@
   <body>
     <script>
       function Ninja() {
-        this.swung = false;
+        this.swung = false; // 初始化實例變數
         this.swingSword = function () {
           return !this.swung;
         };
       }
 
       Ninja.prototype.swingSword = function () {
+        // 定義原型方法
         return this.swung;
       };
 
