@@ -1,37 +1,42 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>Defining getters and setters with Object.defineProperty</title>
-		<link rel="stylesheet" href="../assert.css">
-		<script src="../assert.js"></script>
-	</head>
-	<body>
-		<script>
-			"use strict";
-			function Ninja() {
-			    let _skillLevel = 0;
+  <head>
+    <meta charset="utf-8" />
+    <title>Defining getters and setters with Object.defineProperty</title>
+    <link rel="stylesheet" href="../assert.css" />
+    <script src="../assert.js"></script>
+  </head>
+  <body>
+    <script>
+      "use strict";
+      function Ninja() {
+        let _skillLevel = 0; // 定義私有變數
 
-			    Object.defineProperty(this, 'skillLevel', {
-			      get: () => {
-			        report("The get method is called");
-			        return _skillLevel;
-			      },
-			      set: value => {
-			        report("The set method is called");
-			        _skillLevel = value;
-			      }
-			    });
-			  }
+        // 定義 skillLevel 屬性
+        Object.defineProperty(this, "skillLevel", {
+          // 讀取 skillLevel 屬性時，會呼叫get方法
+          get: () => {
+            report("The get method is called");
+            return _skillLevel;
+          },
+          // 指派新值給 skillLevel 屬性時，就會呼叫這個set方法
+          set: (value) => {
+            report("The set method is called");
+            _skillLevel = value;
+          },
+        });
+      }
 
-			  const ninja = new Ninja();
+      const ninja = new Ninja();
 
-			  assert(typeof ninja._skillLevel === "undefined",
-			         "We cannot access a 'private' property");
-			  assert(ninja.skillLevel === 0, "The getter works fine!");
+      assert(
+        typeof ninja._skillLevel === "undefined", // 無法存取私有變數，要透過 skillLevel 取值
+        "We cannot access a 'private' property"
+      );
+      assert(ninja.skillLevel === 0, "The getter works fine!");
 
-			  ninja.skillLevel = 10;
-			  assert(ninja.skillLevel === 10, "The value was updated");
-		</script>
-	</body>
+      ninja.skillLevel = 10; // 觸發set
+      assert(ninja.skillLevel === 10, "The value was updated");
+    </script>
+  </body>
 </html>
