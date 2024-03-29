@@ -1,27 +1,36 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>Simple prototypes</title>
-		<link rel="stylesheet" href="../assert.css">
-		<script src="../assert.js"></script>
-	</head>
-	<body>
-		<div id="firstElement"></div>
-  		<div id="secondElement"></div>
-  		<script>
-    		const firstElement = document.getElementById("firstElement");
-    		const secondElement = document.getElementById("secondElement");
+  <head>
+    <meta charset="utf-8" />
+    <title>Simple prototypes</title>
+    <link rel="stylesheet" href="../assert.css" />
+    <script src="../assert.js"></script>
+  </head>
+  <body>
+    <div id="firstElement"></div>
+    <div id="secondElement"></div>
+    <script>
+      const firstElement = document.getElementById("firstElement");
+      const secondElement = document.getElementById("secondElement");
 
-    		const map = {};
+      const map = {}; // 定義一個當作對應表的物件
 
-    		map[firstElement] = { data: "firstElement"};
-    		assert(map[firstElement].data === "firstElement", "The first element is correctly mapped");
+      map[firstElement] = { data: "firstElement" }; // 指定 HTML 元素當作 KEY
+      assert(
+        map[firstElement].data === "firstElement",
+        "The first element is correctly mapped"
+      );
 
-    		map[secondElement] = { data: "secondElement"};
-    		assert(map[secondElement].data === "secondElement", "The second element is correctly mapped");
+      map[secondElement] = { data: "secondElement" };
+      assert(
+        map[secondElement].data === "secondElement",
+        "The second element is correctly mapped"
+      );
 
-    		assert(map[firstElement].data === "firstElement", "But now the firstElement is overriden!");
-  		</script>
-	</body>
+      assert(
+        map[firstElement].data === "firstElement",
+        "But now the firstElement is overriden!" // 第一個元素對應的關係已經失效了，因為物件當作鍵的時候，會被轉換成字串 [object HTMLDivElement] 所以執行二個元素時，第一個就會被蓋過去
+      );
+    </script>
+  </body>
 </html>
