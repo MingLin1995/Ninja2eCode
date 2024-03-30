@@ -1,44 +1,55 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>Simple prototypes</title>
-		<link rel="stylesheet" href="../assert.css">
-		<script src="../assert.js"></script>
-	</head>
-	<body>
-		<script>
-			function Set(){
-  				this.data = {};
-  				this.length = 0;
-			}
+  <head>
+    <meta charset="utf-8" />
+    <title>Simple prototypes</title>
+    <link rel="stylesheet" href="../assert.css" />
+    <script src="../assert.js"></script>
+  </head>
+  <body>
+    <script>
+      function Set() {
+        // 每筆資料只能出現一次
+        this.data = {};
+        this.length = 0;
+      }
 
-			Set.prototype.has = function(item){
-  				return typeof this.data[item] !== "undefined";
-   			}
+      // 提供三個方法 has add remove
+      Set.prototype.has = function (item) {
+        // 檢查資料是否被正確儲存
+        return typeof this.data[item] !== "undefined";
+      };
 
-			Set.prototype.add = function(item){
-  				if(!this.has(item)){
-    				this.data[item] = true;
-    				this.length++;
-  				}
-			};
+      Set.prototype.add = function (item) {
+        // 除非資料不再集合內，才會把他加入到集合中
+        if (!this.has(item)) {
+          this.data[item] = true;
+          this.length++;
+        }
+      };
 
-			Set.prototype.remove = function(item){
-			  if(this.has(item)){
-			    delete this.data[item];
-			    this.length--;
-			  }
-			}
+      Set.prototype.remove = function (item) {
+        // 如果資料已經在集合內，那就移除
+        if (this.has(item)) {
+          delete this.data[item];
+          this.length--;
+        }
+      };
 
-			const ninjas = new Set();
-			ninjas.add("Hattori");
-			ninjas.add("Hattori");
+      const ninjas = new Set();
+      ninjas.add("Hattori");
+      ninjas.add("Hattori");
 
-			assert(ninjas.has("Hattori") && ninjas.length === 1,  "Our set contains only one Hattori");
+      assert(
+        ninjas.has("Hattori") && ninjas.length === 1,
+        "Our set contains only one Hattori"
+      );
 
-			ninjas.remove("Hattori");
-			assert(!ninjas.has("Hattori") && ninjas.length === 0,  "Our set is now empty");
-		</script>
-	</body>
+      ninjas.remove("Hattori");
+      assert(
+        !ninjas.has("Hattori") && ninjas.length === 0,
+        "Our set is now empty"
+      );
+    </script>
+  </body>
 </html>
