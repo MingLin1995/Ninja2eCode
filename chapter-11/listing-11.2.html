@@ -1,44 +1,49 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>Augmenting modules</title>
-		<link rel="stylesheet" href="../assert.css">
-		<script src="../assert.js"></script>
-	</head>
-	<body>
-		<script>
-		"use strict";
-		const MouseCounterModule = function(){
-		  let numClicks = 0;
-		  const handleClick = () => {
-		    alert(++numClicks);
-		  };
-		  
-		  return {
-		    countClicks: () => {
-		      document.addEventListener("click", handleClick);
-		    }
-		  };
-		}();
+  <head>
+    <meta charset="utf-8" />
+    <title>Augmenting modules</title>
+    <link rel="stylesheet" href="../assert.css" />
+    <script src="../assert.js"></script>
+  </head>
+  <body>
+    <script>
+      "use strict";
+      const MouseCounterModule = (function () {
+        let numClicks = 0;
+        const handleClick = () => {
+          alert(++numClicks);
+        };
 
-		(function(module) {
-		  let numScrolls = 0;
-		  const handleScroll = () => {
-		    alert(++numScrolls);
-		  }
+        return {
+          countClicks: () => {
+            document.addEventListener("click", handleClick);
+          },
+        };
+      })();
 
-		  module.countScrolls = () => {
-		    document.addEventListener("wheel", handleScroll);
-		  };
-		})(MouseCounterModule);
+      // 以要擴充的模組為引數
+      (function (module) {
+        let numScrolls = 0;
+        const handleScroll = () => {
+          alert(++numScrolls);
+        };
 
-		assert(typeof MouseCounterModule.countClicks === "function",
-		       "We can access initial module functionality");
+        // 擴充模組介面
+        module.countScrolls = () => {
+          document.addEventListener("wheel", handleScroll);
+        };
+      })(MouseCounterModule); // 原始模組做為引數傳入
 
-		assert(typeof MouseCounterModule.countScrolls === "function",
-		       "We can access augmented module functionality");	
+      assert(
+        typeof MouseCounterModule.countClicks === "function", // 原有的方法
+        "We can access initial module functionality"
+      );
 
-		</script>
-	</body>
+      assert(
+        typeof MouseCounterModule.countScrolls === "function", // 新擴充的方法
+        "We can access augmented module functionality"
+      );
+    </script>
+  </body>
 </html>
