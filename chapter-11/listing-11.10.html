@@ -1,26 +1,30 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>Importing a default export</title>
-		<link rel="stylesheet" href="../assert.css">
-		<script src="../assert.js"></script>
-		<script src="traceur.js"></script>
-		<script src="es6-module-loader.js"></script>
-	</head>
-	<body>
-		<script type="module">
-			import ImportedNinja from "NinjaModule.js";
-			import {compareNinjas} from "NinjaModule.js";
+  <head>
+    <meta charset="utf-8" />
+    <title>Importing a default export</title>
+    <link rel="stylesheet" href="../assert.css" />
+    <script src="../assert.js"></script>
+    <script src="traceur.js"></script>
+    <script src="es6-module-loader.js"></script>
+  </head>
+  <body>
+    <script type="module">
+      import ImportedNinja from "NinjaModule.js"; // 匯入預設匯出 ninja ，可以任意命名 看11-9
+      import { compareNinjas } from "NinjaModule.js"; // 具名匯出 看11-9
+      const ninja1 = new ImportedNinja("Yoshi");
+      const ninja2 = new ImportedNinja("Hattori");
 
-			const ninja1 = new ImportedNinja("Yoshi");
-			const ninja2 = new ImportedNinja("Hattori");
+      assert(
+        ninja1 !== null && ninja2 !== null,
+        "We can create a couple of Ninjas"
+      );
 
-			assert(ninja1 !== null && ninja2 !== null, "We can create a couple of Ninjas");
+      assert(!compareNinjas(ninja1, ninja2), "We can compare ninjas");
 
-			assert(!compareNinjas(ninja1, ninja2),
-			      "We can compare ninjas");
-		</script>
-		<p>Has to be executed on a server!</p>
-	</body>
+      // 若有需要變更別名 用 as 關鍵字存取
+      // import {compareNinjas as Ninjas}
+    </script>
+    <p>Has to be executed on a server!</p>
+  </body>
 </html>
